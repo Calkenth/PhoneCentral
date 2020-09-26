@@ -17,12 +17,11 @@ namespace PhoneCentral.Models
             Name = name;
         }
 
-        public void StartCall(Call call)
+        public Thread StartCall(Call call)
         {
             CallAnswered();
             Console.WriteLine($"~!!! {Name}: Call started.");
-            Thread thread = new Thread(() => Call(call));
-            thread.Start();
+            return new Thread(() => Call(call));
         }
 
         private void Call(Call call)

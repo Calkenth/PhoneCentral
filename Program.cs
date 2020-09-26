@@ -57,14 +57,17 @@ namespace PhoneCentral
 
         private static void TakeCall()
         {
+            Thread agentThread;
             var agent = agents.FirstOrDefault(a => a.Occupied == false);
             if (agent != null)
             {
                 var call = calls.FirstOrDefault();
                 if (call != null)
                 {
-                    agent.StartCall(call);
+                    agentThread = agent.StartCall(call);
+                    agentThread.Start();
                     calls.Remove(call);
+                    agentThread.Join();
                 }
                 else
                 {
